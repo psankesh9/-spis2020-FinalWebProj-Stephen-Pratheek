@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block header%}Creating Document{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+{% endblock %}

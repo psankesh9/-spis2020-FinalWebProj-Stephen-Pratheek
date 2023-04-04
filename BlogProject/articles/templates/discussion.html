@@ -1,0 +1,40 @@
+{% extends "base1.html" %}
+
+{% load static %}
+{% block body %}
+<div class="container">
+	<div class="card" style="padding: 10px; box-shadow: 10px 10px 5px black;">
+		<div>
+			<strong class="md" style="margin-left: 375px; font-size: 40px; color: black;
+  			text-shadow: 2px 2px 4px gery;">Post Answer</strong>
+		</div>
+		<form action="/discussion/{{question.id}}/" method="POST">
+			{% csrf_token %}
+	  		<div class="form-group">
+	  			<h3 style="margin-left: 30px;font-size: 40px;">{{question.question}}</h3>
+	   			<textarea class="form-control" name="answer" placeholder="Answer to the above Question" style="width: 1000px; margin-left: 30px; box-shadow: 5px 5px 3px grey;"></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary" style="margin-left: 30px;">Answer</button>
+		</form>
+  </div>
+  <br>
+  <br>
+  <hr>
+  <div style="margin-left: 50px;">
+  	<h3 style="margin-left: 15px;font-size: 40px;">All Answers to the question</h3>
+  	{% for answer in answer %}
+  		<div class="card-md" style="box-shadow: 5px 5px 3px grey;width: 1000px;">
+  			<div style="padding: 10px;">
+	  			<h3 style="color: black;">{{answer.answer}}</h3>
+	  			<p style="color: grey;">Answered by {{answer.author}}|{{answer.timestamp}}|Upvotes:{{answer.upvotes}}</p>
+	  			<a href="/upvote/{{answer.id}}/" class="btn btn-success">Upvote</a>
+	  			{% if answer.author == user %}
+							<a href="/delete_ans/{{answer.id}}/" class="btn btn-danger">Delete</a>
+							{% endif %}
+	  		</div>
+  		</div>
+  		<br>
+  		{% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base1.html" %}
+
+{% load static %}
+{% block body %}
+<div class="container">
+	<div >
+		<div class="card w-75" style="box-shadow: 10px 10px 5px black;">
+  			<div class="card-body">
+   				 <h5 style="font:bold;font-size: 40px;">Post Question</h5>
+   				 <form action="/questions/" method="POST">
+   				 	{% csrf_token %}
+   				 	<textarea name="question" class="form-control" style="box-shadow: 5px 5px 3px grey;"></textarea><br>
+   				 	<button type="submit" class="btn btn-success" style="border-radius: 3px">Ask Question</button>
+   				 </form>
+  			</div>
+		</div>
+		<br>
+	</div>
+	<hr style="width: 800px;margin-right: 300px;">
+	<br>
+	<div>
+		<h5 style="font:bold;font-size: 40px;">All Questions</h5>
+		{% for question in all_question %}
+		<div class="card w-75" style="box-shadow: 5px 5px 3px grey;">
+  			<div class="card-body">
+   				 <h5>{{question.question}}</h5>
+   				 <p>Asked by {{question.author}}|{{question.timestamp}}</p>
+  				 <a type="button" class="btn btn-primary" style="border-radius: 3px;" href="/discussion/{{question.id}}">Answer</a>
+  				 {% if question.author == user %}
+							<a href="/delete_ques/{{question.id}}/" class="btn btn-danger" style="border-radius: 3px;">Delete</a>
+							{% endif %}
+  			</div>
+		</div>
+		<br>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

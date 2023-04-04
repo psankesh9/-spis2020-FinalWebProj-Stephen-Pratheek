@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block header%}Document Editor{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<style>
+    a {
+        outline: none;
+        text-decoration: none;
+        color: white;
+    }
+</style>
+<form  action="{% url 'search_results' %}" method="GET">
+    {{ searchForm|crispy }}
+    <button type="submit" name="Search" class="btn btn-success">Search</button>
+    
+</form>
+<a href="create/"><img src='{% static "add.png" %}' data-toggle="tooltip" data-placement="top" title="Create A New Document"></a>
+<br>
+<br>
+<div class="container">
+    <form method="GET">
+        {% for article in articles %}
+            <div class="card border-dark mb-3" style="max-width: 60rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text">Created on {{article.date}}</p>
+                    <button type="submit" name="DeleteBtn" value ="{{article.id}}" class="btn btn-success">Delete Article</button>
+                    <button type="submit" name="EditBtn" value ="{{article.id}}" class="btn btn-success"><a href="/edit/{{article.id}}">Edit</a></button>
+                </div>
+            </div>
+        {% endfor %}
+    </form>
+</div>
+{% endblock %}
